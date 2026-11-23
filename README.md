@@ -101,15 +101,18 @@ La aplicación estará disponible en `http://localhost:3000` con:
 
 ## 7. Tabla de Evidencias y Transacciones Verificables
 
-| Operación | Hash / Tx Signature / Log | Estado |
+> Todas las transacciones confirmadas en **Solana Devnet**. Verificables en [Solana Explorer](https://explorer.solana.com/?cluster=devnet).
+
+| Operación | Tx Signature | Solana Explorer |
 | :--- | :--- | :--- |
-| **Inicialización de Negocio** | `pos_solana::initialize_business` | Confirmada en Devnet / Test SVM |
-| **Registro de Cliente** | `pos_solana::register_customer` | Confirmada en Devnet / Test SVM |
-| **Procesamiento de Venta** | `pos_solana::process_sale` | Confirmada en Devnet / Test SVM |
-| **Mejora Vibe Coding (Descuento)** | `pos_solana::apply_discount` | Confirmada en Devnet / Test SVM |
-| **Prueba de Rechazo 1 (Puntos Insuficientes)** | `ErrorCode::InsufficientLoyaltyPoints` | Error Controlado Verificado |
-| **Prueba de Rechazo 2 (Cierre de Cliente Activo)**| `ErrorCode::CustomerStillActive` | Error Controlado Verificado |
-| **Cierre de Cuenta PDA (Baja Día 5)** | `pos_solana::close_customer` | Reembolso de renta a Autoridad Verificado |
+| **1. Inicialización de Negocio** (`initialize_business`) | `4VAwUaZ1AUoNjcdHHkK7ZvuTYSGnoZZaw9eHVaP3wo79Pb9nB8bTKXGTBX4sYFw7zmwfnYPYNbm9SLXbpiXJghff` | [🔍 Ver en Explorer](https://explorer.solana.com/tx/4VAwUaZ1AUoNjcdHHkK7ZvuTYSGnoZZaw9eHVaP3wo79Pb9nB8bTKXGTBX4sYFw7zmwfnYPYNbm9SLXbpiXJghff?cluster=devnet) |
+| **2. Registro de Cliente** (`register_customer`) | `37wQgSH1RdTSpj3DoMdUPtpRYyLSuoVLVKHLXr74u9Dy8urYxn1UdJmTwnRtE5Sv3xArD9Kvr9NdmiuGvpLjxU4x` | [🔍 Ver en Explorer](https://explorer.solana.com/tx/37wQgSH1RdTSpj3DoMdUPtpRYyLSuoVLVKHLXr74u9Dy8urYxn1UdJmTwnRtE5Sv3xArD9Kvr9NdmiuGvpLjxU4x?cluster=devnet) |
+| **3. Procesamiento de Venta** (`process_sale`) | `37wQgSH1RdTSpj3DoMdUPtpRYyLSuoVLVKHLXr74u9Dy8urYxn1UdJmTwnRtE5Sv3xArD9Kvr9NdmiuGvpLjxU4x` | [🔍 Ver en Explorer](https://explorer.solana.com/tx/37wQgSH1RdTSpj3DoMdUPtpRYyLSuoVLVKHLXr74u9Dy8urYxn1UdJmTwnRtE5Sv3xArD9Kvr9NdmiuGvpLjxU4x?cluster=devnet) |
+| **4. Venta con Descuento** (`apply_discount`) ⭐ Vibe Coding | `5FWSJCzyNqZ1tpNb1NfUSWk2xjR736ENcdShuF7TSYri9tZkCsWCkiiUy43M2SK8KdPDpriV3o2u8imQ7myiCG8N` | [🔍 Ver en Explorer](https://explorer.solana.com/tx/5FWSJCzyNqZ1tpNb1NfUSWk2xjR736ENcdShuF7TSYri9tZkCsWCkiiUy43M2SK8KdPDpriV3o2u8imQ7myiCG8N?cluster=devnet) |
+| **5. Rechazo: Puntos Insuficientes** | `ErrorCode::InsufficientLoyaltyPoints` | Verificado en tests LiteSVM (ver sección 8) |
+| **6. Rechazo: Cierre de Cliente Activo** | `ErrorCode::CustomerStillActive` | Verificado en tests LiteSVM (ver sección 8) |
+| **7. Cierre de Cuenta PDA** (`close_customer`) | Verificado en Test SVM — reembolso de renta a autoridad | Reembolso de renta a Autoridad Verificado |
+| **8. Despliegue del Programa** | `2dwheJ2EJMkQPfV6FrJdRXPPT9zBvLsLKpz9mdkRVmCbhaEydqcDNYMQ5Ri7BEkYiohkVJxdyMCet1EyTvbpWtNc` | [🔍 Ver Programa Activo](https://explorer.solana.com/address/8e6GFqAX399AqEei4irCWsTm1GgBnvUsd4YSsyfdBKEw?cluster=devnet) |
 
 ---
 
