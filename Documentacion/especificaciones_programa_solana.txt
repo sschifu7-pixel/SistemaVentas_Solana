@@ -1,0 +1,83 @@
+===============================================================================
+ESPECIFICACIONES TÉCNICAS Y REQUISITOS DEL PROYECTO FINAL
+SOLANA ENGINEERING TRACK: ADVANCED BOOTCAMP
+===============================================================================
+
+1. INFORMACIÓN GENERAL Y OBJETIVO
+-------------------------------------------------------------------------------
+- Proyecto: Sistema de Registro de Negocio, Clientes y Ventas en Solana (Devnet)
+- Formato de entrega: Repositorio único (GitHub) público o con acceso de revisión
+- Red: Solana Devnet (utilizando SOL de prueba)
+- Fecha límite de entrega: 22 de Noviembre de 2026, 23:59 (Hora CDMX)
+
+2. ARQUITECTURA TÉCNICA Y HERRAMIENTAS PRINCIPALES
+-------------------------------------------------------------------------------
+- Programa On-Chain: Rust + Anchor Framework
+- Modelo de Cuentas: PDAs (Program Derived Addresses) para Negocio y Clientes
+- Interfaz del Programa: IDL (Interface Definition Language en JSON)
+- Generación del Cliente: Codama (Cliente TypeScript generado automáticamente)
+- Lenguaje del Cliente: TypeScript
+- Conexión Blockchain: Wallet Adapter (Phantom / Solflare) + Endpoint RPC
+- Frontend: Aplicación Web en React / Next.js (Optimizada para Móvil y PC)
+- Entorno de Desarrollo Recomendado: WSL (Windows Subsystem for Linux) o Codespaces
+
+3. ESPECIFICACIONES DEL PROGRAMA EN RUST (ANCHOR)
+-------------------------------------------------------------------------------
+A. Modelo de Cuentas y PDAs:
+   - PDA de Negocio: Almacena autoridad (owner), contador total de ventas, volumen acumulado y bump.
+   - PDA de Cliente: Almacena identificador/nombre, pubkey del cliente, total de compras y bump.
+
+B. Instrucciones On-Chain Requeridas:
+   1. initialize_business: Inicialización de la cuenta PDA del negocio.
+   2. register_customer: Creación de la cuenta PDA de un cliente vinculado al negocio.
+   3. process_sale: Actualización del contador de ventas y volumen acumulado en las PDAs correspondientes.
+   4. close_customer (Baja / Cierre del Día 5): Cierre condicionado de la cuenta PDA de un cliente inactivo, devolviendo el saldo de exención de renta (rent-exempt) a la autoridad del negocio.
+   5. Módulo de Mejora (Vibe Coding): Instrucción con validación de reglas de negocio en Rust (ej. apply_discount que exige un mínimo de puntos acumulados) y manejo de errores personalizados (ej. InsufficientLoyaltyPoints).
+
+4. ESPECIFICACIONES DEL FRONTEND Y VISTAS DE USUARIO
+-------------------------------------------------------------------------------
+A. Configuración de Wallet & RPC:
+   - Integración con @solana/wallet-adapter-react.
+   - Selección de red en Devnet.
+   - Consultas de lectura directas vía RPC sin requerir firma.
+   - Firma de operaciones de escritura a través del Wallet Adapter.
+
+B. Diseño de Pantallas:
+   - Vista Móvil 1 (Punto de Venta / POS): Cobro rápido, selección de cliente PDA, entrada de monto en SOL, concepto y botón de firma con notificación Toast.
+   - Vista Móvil 2 (Expediente de Cliente): Perfil del cliente, visualización de PDA, volumen acumulado, saldo de puntos de fidelidad y accesos directos.
+   - Vista PC (Dashboard de Administración): Panel multinavegación con métricas globales, inspector de cuentas PDA deserializadas desde el IDL y feed de transacciones en tiempo real.
+
+5. ESTRUCTURA REQUERIDA DEL REPOSITORIO
+-------------------------------------------------------------------------------
+  /
+  ├── program/      (Código en Rust y Anchor, lib.rs, Anchor.toml)
+  ├── idl/          (Archivo IDL JSON generado al compilar)
+  ├── client/       (Cliente TypeScript generado con Codama)
+  ├── frontend/     (Aplicación React / Next.js con Wallet Adapter)
+  └── README.md     (Documentación de entrega y evidencias)
+
+6. CONTENIDO OBLIGATORIO EN EL ARCHIVO README.MD
+-------------------------------------------------------------------------------
+1. Identificación del Estudiante:
+   - Nombre completo (para la emisión del certificado).
+   - Correo electrónico registrado en el bootcamp.
+
+2. Datos del Despliegue:
+   - Ruta elegida: Proyecto guiado con mejora funcional.
+   - Program ID desplegado en Solana Devnet.
+   - Enlace directo a Solana Explorer (Devnet).
+
+3. Instrucciones de Configuración y Ejecución:
+   - Requisitos previos (Rust, Anchor CLI, Node.js, Wallet con Devnet SOL).
+   - Pasos para clonar, instalar dependencias y ejecutar localmente / Codespaces.
+
+4. Resumen de Operaciones y Mejora Funcional:
+   - Explicación de las instrucciones Rust (Creación, Lectura, Modificación, Baja de día 5).
+   - Explicación de la regla de negocio de la mejora funcional y su caso de rechazo.
+
+5. Tabla de Evidencias y Transacciones Verificables:
+   - Hash / Tx Signature de Registro de Cliente.
+   - Hash / Tx Signature de Procesamiento de Venta.
+   - Hash / Tx Signature de Cierre de Cuenta (Día 5).
+   - Hash / Log de la Prueba de Rechazo / Error Controlado.
+===============================================================================

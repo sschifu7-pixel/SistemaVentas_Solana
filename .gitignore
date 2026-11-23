@@ -1,0 +1,45 @@
+# ============================================
+#  Solana POS - .gitignore
+# ============================================
+
+# ----- Rust / Cargo -----
+target/
+**/*.rs.bk
+Cargo.lock
+
+# ----- Node.js -----
+node_modules/
+dist/
+.cache/
+.parcel-cache/
+
+# ----- Anchor -----
+.anchor/
+program/.anchor/
+program/target/
+
+# ----- Solana Keypairs (NUNCA subir claves privadas) -----
+*.json
+!idl/*.json
+!frontend/src/idl/*.json
+!program/Anchor.toml
+
+# ----- Variables de entorno -----
+.env
+.env.local
+.env.*.local
+
+# ----- Frontend build -----
+frontend/dist/
+frontend/.vite/
+
+# ----- Cliente generado (opcional mantener) -----
+# client/src/generated/
+
+# ----- OS y Editor -----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -1,0 +1,898 @@
+{
+  "address": "8e6GFqAX399AqEei4irCWsTm1GgBnvUsd4YSsyfdBKEw",
+  "metadata": {
+    "name": "pos_solana",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Solana Point of Sale Program with Business, Customer and Loyalty Points"
+  },
+  "instructions": [
+    {
+      "name": "apply_discount",
+      "docs": [
+        "4. Módulo de Mejora (Vibe Coding): apply_discount que valida puntos de lealtad requeridos."
+      ],
+      "discriminator": [
+        209,
+        142,
+        200,
+        153,
+        123,
+        140,
+        45,
+        38
+      ],
+      "accounts": [
+        {
+          "name": "business",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  115,
+                  105,
+                  110,
+                  101,
+                  115,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          },
+          "relations": [
+            "customer"
+          ]
+        },
+        {
+          "name": "customer",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  109,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "business"
+              },
+              {
+                "kind": "account",
+                "path": "customer.customer",
+                "account": "Customer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "business"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "points_to_redeem",
+          "type": "u64"
+        },
+        {
+          "name": "sale_amount",
+          "type": "u64"
+        },
+        {
+          "name": "discount_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "close_customer",
+      "docs": [
+        "5. close_customer (Baja / Cierre del Día 5): Cierre condicionado de la cuenta PDA de un cliente inactivo,",
+        "devolviendo el saldo de exención de renta (rent-exempt) a la autoridad del negocio."
+      ],
+      "discriminator": [
+        245,
+        28,
+        17,
+        116,
+        225,
+        235,
+        169,
+        151
+      ],
+      "accounts": [
+        {
+          "name": "business",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  115,
+                  105,
+                  110,
+                  101,
+                  115,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          },
+          "relations": [
+            "customer"
+          ]
+        },
+        {
+          "name": "customer",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  109,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "business"
+              },
+              {
+                "kind": "account",
+                "path": "customer.customer",
+                "account": "Customer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "business"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_business",
+      "docs": [
+        "1. initialize_business: Inicialización de la cuenta PDA del negocio."
+      ],
+      "discriminator": [
+        224,
+        230,
+        190,
+        93,
+        141,
+        151,
+        35,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "business",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  115,
+                  105,
+                  110,
+                  101,
+                  115,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "process_sale",
+      "docs": [
+        "3. process_sale: Actualización del contador de ventas y volumen acumulado en las PDAs correspondientes."
+      ],
+      "discriminator": [
+        103,
+        228,
+        248,
+        104,
+        78,
+        46,
+        193,
+        82
+      ],
+      "accounts": [
+        {
+          "name": "business",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  115,
+                  105,
+                  110,
+                  101,
+                  115,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          },
+          "relations": [
+            "customer"
+          ]
+        },
+        {
+          "name": "customer",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  109,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "business"
+              },
+              {
+                "kind": "account",
+                "path": "customer.customer",
+                "account": "Customer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "business"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "register_customer",
+      "docs": [
+        "2. register_customer: Creación de la cuenta PDA de un cliente vinculado al negocio."
+      ],
+      "discriminator": [
+        211,
+        203,
+        193,
+        164,
+        198,
+        246,
+        27,
+        223
+      ],
+      "accounts": [
+        {
+          "name": "business",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  115,
+                  105,
+                  110,
+                  101,
+                  115,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "customer",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  109,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "business"
+              },
+              {
+                "kind": "account",
+                "path": "customer_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "customer_wallet"
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "business"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "set_customer_status",
+      "docs": [
+        "Actualizar estado del cliente (activar / desactivar)"
+      ],
+      "discriminator": [
+        173,
+        230,
+        216,
+        220,
+        175,
+        245,
+        68,
+        192
+      ],
+      "accounts": [
+        {
+          "name": "business",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  115,
+                  105,
+                  110,
+                  101,
+                  115,
+                  115
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          },
+          "relations": [
+            "customer"
+          ]
+        },
+        {
+          "name": "customer",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  117,
+                  115,
+                  116,
+                  111,
+                  109,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "business"
+              },
+              {
+                "kind": "account",
+                "path": "customer.customer",
+                "account": "Customer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "business"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "is_active",
+          "type": "bool"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Business",
+      "discriminator": [
+        60,
+        203,
+        129,
+        133,
+        68,
+        183,
+        210,
+        177
+      ]
+    },
+    {
+      "name": "Customer",
+      "discriminator": [
+        112,
+        147,
+        140,
+        31,
+        93,
+        186,
+        103,
+        18
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "BusinessInitializedEvent",
+      "discriminator": [
+        1,
+        243,
+        73,
+        95,
+        145,
+        55,
+        51,
+        100
+      ]
+    },
+    {
+      "name": "CustomerClosedEvent",
+      "discriminator": [
+        123,
+        155,
+        48,
+        22,
+        219,
+        187,
+        181,
+        238
+      ]
+    },
+    {
+      "name": "CustomerRegisteredEvent",
+      "discriminator": [
+        179,
+        112,
+        191,
+        211,
+        102,
+        24,
+        216,
+        135
+      ]
+    },
+    {
+      "name": "CustomerStatusUpdatedEvent",
+      "discriminator": [
+        162,
+        90,
+        254,
+        144,
+        190,
+        157,
+        35,
+        138
+      ]
+    },
+    {
+      "name": "DiscountAppliedEvent",
+      "discriminator": [
+        154,
+        123,
+        193,
+        15,
+        97,
+        103,
+        89,
+        47
+      ]
+    },
+    {
+      "name": "SaleProcessedEvent",
+      "discriminator": [
+        197,
+        46,
+        37,
+        238,
+        12,
+        139,
+        139,
+        103
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "No tiene autorización para ejecutar esta acción en el negocio."
+    },
+    {
+      "code": 6001,
+      "name": "InvalidName",
+      "msg": "El nombre proporcionado es inválido o excede los 50 caracteres."
+    },
+    {
+      "code": 6002,
+      "name": "InvalidAmount",
+      "msg": "El monto de la venta debe ser mayor a cero."
+    },
+    {
+      "code": 6003,
+      "name": "InvalidBusinessRelation",
+      "msg": "La cuenta del cliente no pertenece a este negocio."
+    },
+    {
+      "code": 6004,
+      "name": "CustomerInactive",
+      "msg": "El cliente no se encuentra activo para realizar transacciones."
+    },
+    {
+      "code": 6005,
+      "name": "InsufficientLoyaltyPoints",
+      "msg": "Puntos de fidelidad insuficientes para aplicar el descuento solicitado."
+    },
+    {
+      "code": 6006,
+      "name": "InvalidPointsAmount",
+      "msg": "La cantidad de puntos a redimir debe ser mayor a cero."
+    },
+    {
+      "code": 6007,
+      "name": "DiscountExceedsAmount",
+      "msg": "El monto del descuento no puede ser superior al monto de la venta."
+    },
+    {
+      "code": 6008,
+      "name": "CustomerStillActive",
+      "msg": "No se puede cerrar la cuenta de un cliente activo. Debe darse de baja primero."
+    },
+    {
+      "code": 6009,
+      "name": "MathOverflow",
+      "msg": "Error de cálculo aritmético (desbordamiento)."
+    }
+  ],
+  "types": [
+    {
+      "name": "Business",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "total_sales",
+            "type": "u64"
+          },
+          {
+            "name": "total_volume",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BusinessInitializedEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "business",
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Customer",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "business",
+            "type": "pubkey"
+          },
+          {
+            "name": "customer",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "total_purchases",
+            "type": "u64"
+          },
+          {
+            "name": "purchases_count",
+            "type": "u64"
+          },
+          {
+            "name": "loyalty_points",
+            "type": "u64"
+          },
+          {
+            "name": "is_active",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CustomerClosedEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "business",
+            "type": "pubkey"
+          },
+          {
+            "name": "customer_pda",
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CustomerRegisteredEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "business",
+            "type": "pubkey"
+          },
+          {
+            "name": "customer_pda",
+            "type": "pubkey"
+          },
+          {
+            "name": "customer_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CustomerStatusUpdatedEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "business",
+            "type": "pubkey"
+          },
+          {
+            "name": "customer_pda",
+            "type": "pubkey"
+          },
+          {
+            "name": "is_active",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DiscountAppliedEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "business",
+            "type": "pubkey"
+          },
+          {
+            "name": "customer_pda",
+            "type": "pubkey"
+          },
+          {
+            "name": "points_redeemed",
+            "type": "u64"
+          },
+          {
+            "name": "discount_amount",
+            "type": "u64"
+          },
+          {
+            "name": "final_amount",
+            "type": "u64"
+          },
+          {
+            "name": "remaining_points",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SaleProcessedEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "business",
+            "type": "pubkey"
+          },
+          {
+            "name": "customer_pda",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "points_earned",
+            "type": "u64"
+          },
+          {
+            "name": "total_business_sales",
+            "type": "u64"
+          },
+          {
+            "name": "total_business_volume",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}
