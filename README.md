@@ -109,10 +109,12 @@ La aplicación estará disponible en `http://localhost:3000` con:
 | **2. Registro de Cliente** (`register_customer`) | `37wQgSH1RdTSpj3DoMdUPtpRYyLSuoVLVKHLXr74u9Dy8urYxn1UdJmTwnRtE5Sv3xArD9Kvr9NdmiuGvpLjxU4x` | [🔍 Ver en Explorer](https://explorer.solana.com/tx/37wQgSH1RdTSpj3DoMdUPtpRYyLSuoVLVKHLXr74u9Dy8urYxn1UdJmTwnRtE5Sv3xArD9Kvr9NdmiuGvpLjxU4x?cluster=devnet) |
 | **3. Procesamiento de Venta** (`process_sale`) | `4Rhvbbn38DKz3C73DF395c7tH2ipNt6qGxqC92HqQeNwBAgM5g4iz7mQE7pEobg4CXuuXy41Tn86mbUqZjt1KU1C` | [🔍 Ver en Explorer](https://explorer.solana.com/tx/4Rhvbbn38DKz3C73DF395c7tH2ipNt6qGxqC92HqQeNwBAgM5g4iz7mQE7pEobg4CXuuXy41Tn86mbUqZjt1KU1C?cluster=devnet) |
 | **4. Venta con Descuento** (`apply_discount`) ⭐ Vibe Coding | `5FWSJCzyNqZ1tpNb1NfUSWk2xjR736ENcdShuF7TSYri9tZkCsWCkiiUy43M2SK8KdPDpriV3o2u8imQ7myiCG8N` | [🔍 Ver en Explorer](https://explorer.solana.com/tx/5FWSJCzyNqZ1tpNb1NfUSWk2xjR736ENcdShuF7TSYri9tZkCsWCkiiUy43M2SK8KdPDpriV3o2u8imQ7myiCG8N?cluster=devnet) |
-| **5. Rechazo: Puntos Insuficientes** | `ErrorCode::InsufficientLoyaltyPoints` | Verificado en tests LiteSVM (ver sección 8) |
-| **6. Rechazo: Cierre de Cliente Activo** | `ErrorCode::CustomerStillActive` | Verificado en tests LiteSVM (ver sección 8) |
-| **7. Cierre de Cuenta PDA** (`close_customer`) | Verificado en Test SVM — reembolso de renta a autoridad | Reembolso de renta a Autoridad Verificado |
+| **5. Rechazo: Puntos Insuficientes** | `ErrorCode::InsufficientLoyaltyPoints` — tx rechazada intencionalmente | ✅ Error controlado — ver output LiteSVM §8 |
+| **6. Rechazo: Cierre de Cliente Activo** | `ErrorCode::CustomerStillActive` — tx rechazada intencionalmente | ✅ Error controlado — ver output LiteSVM §8 |
+| **7. Cierre de Cuenta PDA** (`close_customer`) | Test SVM: reembolso de renta (rent-exempt) devuelto a autoridad del negocio | ✅ Verificado — ver output LiteSVM §8 |
 | **8. Despliegue del Programa** | `2dwheJ2EJMkQPfV6FrJdRXPPT9zBvLsLKpz9mdkRVmCbhaEydqcDNYMQ5Ri7BEkYiohkVJxdyMCet1EyTvbpWtNc` | [🔍 Ver Programa Activo](https://explorer.solana.com/address/8e6GFqAX399AqEei4irCWsTm1GgBnvUsd4YSsyfdBKEw?cluster=devnet) |
+
+> **Nota sobre errores controlados (filas 5 y 6):** Las transacciones de rechazo no generan firma en Solana Explorer porque son **revertidas intencionalmente por el programa on-chain** antes de ser confirmadas. Su validación se demuestra mediante los tests automatizados con LiteSVM (sección 8), donde el runtime de Solana ejecuta las mismas validaciones del contrato y confirma que los errores se lanzan correctamente.
 
 ---
 
